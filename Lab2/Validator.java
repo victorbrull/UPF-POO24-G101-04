@@ -69,7 +69,7 @@ public class Validator {
                 break;
             
             case 1:
-                System.out.println("There's at least one imbalanced roop.");
+                System.out.println("There's at least one imbalanced loop.");
                 break;
         
             case 0:

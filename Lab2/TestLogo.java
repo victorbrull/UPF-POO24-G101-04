@@ -23,7 +23,7 @@ public class TestLogo {
         program.addStatement("FWD", 10);
         program.addStatement("TRN");
         System.out.println(program.getSize());
-        System.out.println(program.getStatement(2));
+        System.out.println(program.getStatement(0));
 
         Logo logo = new Logo();
         System.out.println(logo.getInstruction("PEN"));
