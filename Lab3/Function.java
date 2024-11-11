@@ -6,4 +6,8 @@ public class Function extends Instruction {
         super(initWord, initMinRange, initMaxRange);
         associatedProgram = p;
     }
+
+    public Program getProgram() {
+        return associatedProgram;
+    }
 }
