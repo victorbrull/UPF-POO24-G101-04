@@ -1,9 +1,9 @@
+import java.util.*;
+
 public class Interpreter {
     
     private Logo logo;      // To get acces to the dictionary
     private Program program;   // Program to be executed
-    private int line;         // Keep track in which line there is a REP instruction
-    private int executedLoops;   // Keep track of the loops executed
 
     // Constructor method
     public Interpreter(Logo initLogo, Program initProgram) {
@@ -14,19 +14,65 @@ public class Interpreter {
     // Method to start execution 
     public void run() {
 
-        // Firstly, validate if the program works propertly
+        // Firstly, validate whether the program works propertly
         Validator validator = new Validator(logo);
         if (validator.errorCode(program) != 0) {
             validator.printError(program); 
 
         } else {
-            
             // Once the program is valid iterate over each statement of the program
-            for (int i = 0; i < program.getSize(); i++) {
-                switch (program.getStatement(i).getWord()) {
-                    case "REP":
-                        executedLoops = 0;
-                        line = i;
+            Stack<Integer> stack = new Stack<>(); // Create a stack to store the line number of each REP
+            ArrayList<ArrayList<Integer>> executedLoopsArrayList2D = new ArrayList<>(); // Create an ArrayList2D to keep track of the number of executed loops of each loop 
+            for (int line = 0; line < program.getSize(); line++) {
+                Statement currentStatement = program.getStatement(line);
+
+                if (currentStatement.getWord().equals("REP")) {
+                    // In case of REP, we add a new row to the ArrayList2D with two elements: 
+                    // the line number of the begginig of the loop, and the number of times that loop has been exeuted
+                    stack.push(line);
+                    ArrayList<Integer> newRow = new ArrayList<>();
+                    newRow.add(line);
+                    newRow.add(0);
+                    executedLoopsArrayList2D.add(newRow);
+                }
+
+                else if (currentStatement.getWord().equals("END")) {
+                    // In case of END, we add 1 to the number of executed loops of that exactly loop
+                    int indexRow = -1;
+                    for (indexRow = 0; indexRow < executedLoopsArrayList2D.size(); indexRow++) {
+                        if (executedLoopsArrayList2D.get(indexRow).get(0) == stack.peek()) {
+                            int temp = executedLoopsArrayList2D.get(indexRow).get(1);
+                            temp++;
+                            executedLoopsArrayList2D.get(indexRow).set(1, temp);
+                            break;
+                        }
+                    }
+                    // Then, if the number of executed loops is still less than the parameter of that loop, return at the beggining of that loop 
+                    if (executedLoopsArrayList2D.get(indexRow).get(1) < program.getStatement(stack.peek()).getParameter()) {
+                        line = stack.peek() + 1;
+                    }
+                    // However, if the nuber of executed loops equals to the parameter of that loop, it means that that loop has already been completed, so we pop its beggining line and its loops counter
+                    else {
+                        stack.pop();
+                        executedLoopsArrayList2D.remove(indexRow);
+                    }
+                }
+
+                else if (logo.getInstruction(currentStatement.getWord()) instanceof TurtleInstruction) {
+                    // Downcast to TurtleInstruction to access the apply method
+                    TurtleInstruction turtleInstruction = (TurtleInstruction) logo.getInstruction(currentStatement.getWord());
+                
+                    // Call the apply method with the appropriate parameter
+                    turtleInstruction.apply(currentStatement.getParameter());
+                }
+                
+                else if (logo.getInstruction(currentStatement.getWord()) instanceof Function) {
+                    // Downcasting the current statement so it corresponds to a Function
+                    Function function = (Function) logo.getInstruction(currentStatement.getWord());
+                    Program associatedProgram = function.getProgram();
+                        
+                    Interpreter interpreter = new Interpreter(logo, associatedProgram);
+                    interpreter.run(); // Recursively run the associated program
                 }
             }
         }
