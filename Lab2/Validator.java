@@ -44,7 +44,7 @@ public class Validator {
                     stack.push(tempStatement);
                 }
                 else {
-                    if (stack.empty()) {
+                    if (tempStatement.getWord() == "END" && stack.empty()) {
                         return 1;
                     }
                     else {

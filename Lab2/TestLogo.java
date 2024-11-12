@@ -21,7 +21,7 @@ public class TestLogo {
 
         Program program = new Program();
         program.addStatement("FWD", 10);
-        program.addStatement("TRN");
+        program.addStatement("ROT", 50);
         System.out.println(program.getSize());
         System.out.println(program.getStatement(0));
 

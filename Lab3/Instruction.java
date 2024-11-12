@@ -1,4 +1,7 @@
 public class Instruction {
+
+    // Variables of an instruction
+    // They are protected given that there are Instruction subclasses
     protected String word;
     protected int minRange;
     protected int maxRange;
