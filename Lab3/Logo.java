@@ -9,9 +9,9 @@ public class Logo {
         instructions = new HashMap<>();   // Initialize an empty dictionary
 
         // Declare some instructions and put them into the dictionary
-        instructions.put("PEN", new Instruction("PEN", 0, 1));
-        instructions.put("FWD", new Instruction("FWD", 1, 500));
-        instructions.put("ROT", new Instruction("ROT", 1, 360));
+        instructions.put("PEN", new TurtleInstruction("PEN", 0, 1, turtle));
+        instructions.put("FWD", new TurtleInstruction("FWD", 1, 500, turtle));
+        instructions.put("ROT", new TurtleInstruction("ROT", 1, 360, turtle));
         instructions.put("REP", new Instruction("REP", 1, 100));
         instructions.put("END", new Instruction("END"));
     }
@@ -32,5 +32,9 @@ public class Logo {
         Function function = new Function(name, program);
         // Add it to the dictionary
         instructions.put(name, function);
+    }
+
+    public Turtle getTurtle() {
+        return turtle;
     }
 }

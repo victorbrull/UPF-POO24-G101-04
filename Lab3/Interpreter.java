@@ -1,14 +1,17 @@
+
 import java.util.*;
 
 public class Interpreter {
     
     private Logo logo;      // To get acces to the dictionary
     private Program program;   // Program to be executed
+    private int line;         // Keep track of the current line
 
     // Constructor method
     public Interpreter(Logo initLogo, Program initProgram) {
         logo = initLogo;
         program = initProgram;
+        line = 0;
     }
 
     // Method to start execution 
@@ -23,7 +26,7 @@ public class Interpreter {
             // Once the program is valid iterate over each statement of the program
             Stack<Integer> stack = new Stack<>(); // Create a stack to store the line number of each REP
             ArrayList<ArrayList<Integer>> executedLoopsArrayList2D = new ArrayList<>(); // Create an ArrayList2D to keep track of the number of executed loops of each loop 
-            for (int line = 0; line < program.getSize(); line++) {
+            while (line < program.getSize()) {
                 Statement currentStatement = program.getStatement(line);
 
                 if (currentStatement.getWord().equals("REP")) {
@@ -61,7 +64,6 @@ public class Interpreter {
                 else if (logo.getInstruction(currentStatement.getWord()) instanceof TurtleInstruction) {
                     // Downcast to TurtleInstruction to access the apply method
                     TurtleInstruction turtleInstruction = (TurtleInstruction) logo.getInstruction(currentStatement.getWord());
-                
                     // Call the apply method with the appropriate parameter
                     turtleInstruction.apply(currentStatement.getParameter());
                 }
@@ -74,7 +76,9 @@ public class Interpreter {
                     Interpreter interpreter = new Interpreter(logo, associatedProgram);
                     interpreter.run(); // Recursively run the associated program
                 }
+
+                line++;
             }
         }
-    }
+    } 
 }
