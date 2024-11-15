@@ -32,5 +32,8 @@ public class TestLogo {
 
         Validator validator = new Validator(logo);
         validator.printError(program);
+
+        Interpreter interpreter = new Interpreter(logo, program);
+        interpreter.run();
     }
 }

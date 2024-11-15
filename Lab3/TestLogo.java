@@ -22,8 +22,16 @@ public class TestLogo {
         p2.addStatement("FWD", 20);
         p2.addStatement("END");
 
+        Program p3 = new Program();
+        p3.addStatement("REP", 2);
+        p3.addStatement("FWD", 10);
+        p3.addStatement("REP", 2);
+        p3.addStatement("FWD", 20);
+        p3.addStatement("END");
+        p3.addStatement("END");
+
         // Create the Interpreter which should execute p2
-        Interpreter interpreter = new Interpreter(logo, p2);
+        Interpreter interpreter = new Interpreter(logo, p3);
         interpreter.run();
     }
 }
