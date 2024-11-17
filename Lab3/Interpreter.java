@@ -52,7 +52,7 @@ public class Interpreter {
                     }
                     // Then, if the number of executed loops is still less than the parameter of that loop, return at the beggining of that loop 
                     if (executedLoopsArrayList2D.get(indexRow).get(1) < program.getStatement(stack.peek()).getParameter()) {
-                        line = stack.peek() + 1;
+                        line = stack.peek();
                     }
                     // However, if the nuber of executed loops equals to the parameter of that loop, it means that that loop has already been completed, so we pop its beggining line and its loops counter
                     else {
