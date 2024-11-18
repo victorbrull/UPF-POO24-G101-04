@@ -28,5 +28,12 @@ public class TestLogo {
         // Create the Interpreter which should execute p2
         Interpreter interpreter = new Interpreter(logo, p2);
         interpreter.run();
+
+        // Display the resulting drawing
+        javax.swing.JFrame frame = new javax.swing.JFrame();
+        frame.setContentPane( logo );
+        frame.pack();
+        frame.setDefaultCloseOperation( javax.swing.JFrame.EXIT_ON_CLOSE );
+        frame.setVisible( true );
     }
 }
