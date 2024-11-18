@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class Turtle {
     // Private attributes
@@ -9,12 +10,13 @@ public class Turtle {
     private Logo logo;          // Reference to Logo object
 
     // Constructor to initialize the turtle
-    public Turtle() {
+    public Turtle(Logo initLogo) {
         // Set the turtle at the center of the screen
         this.xPosition = 500;
         this.yPosition = 500; 
         this.currentAngle = 0;  // Facing up (0 degrees)
         this.isPenActivated = false;  // Pen is initially deactivated
+        this.logo = initLogo;
     }
 
     // Getter for x position
@@ -75,6 +77,7 @@ public class Turtle {
 
     // Method to draw the current position and direction of the turtle on the screen
     public void paint(Graphics graphic) {
+
         // Compute tip's coordinates
         int tipX = xPosition + (int) (20 * Math.cos(Math.toRadians(currentAngle)));
         int tipY = yPosition + (int) (20 * Math.sin(Math.toRadians(currentAngle)));

@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.*;
 import javax.swing.JPanel;
 
@@ -8,7 +9,7 @@ public class Logo extends JPanel{
     private ArrayList<Segment> segments;    // List of Segment objects
 
     public Logo() {
-        turtle = new Turtle();   // Initialize a Turtle object
+        turtle = new Turtle(this);   // Initialize a Turtle object
         instructions = new HashMap<>();   // Initialize an empty dictionary
 
         // Declare some instructions and put them into the dictionary
@@ -22,6 +23,8 @@ public class Logo extends JPanel{
         // Set background's dimension and colour
         setPreferredSize(new java.awt.Dimension(1000, 1000));
         setBackground(new java.awt.Color(255, 255, 255));
+
+        segments = new ArrayList<Segment>();
     }
 
     // Return the Instruction of a given key
@@ -59,16 +62,17 @@ public class Logo extends JPanel{
         // Call the parent method
         super.paint(graphic);
 
-        // Paint all line segments in the list
-        while (segments.getFirst() != null) {
-            // Paint line segment
-            segments.getFirst().paint(graphic);
+        Graphics2D g2 = (Graphics2D) graphic;
+        g2.setStroke( new java.awt.BasicStroke( 5 ) ); // line thickness
+        g2.setColor( java.awt.Color.RED ); // color
 
-            // Remove the first Segment of the list
-            segments.removeFirst();
+        // Paint all line segments in the list
+        for (Segment segment : segments) {
+            // Paint line segment
+            segment.paint(g2);
         }
 
         // Paint the turtle
-        turtle.paint(graphic);
+        turtle.paint(g2);
     }
 }
