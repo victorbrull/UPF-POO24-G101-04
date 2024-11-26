@@ -5,7 +5,10 @@ public class TestLogo {
         // Crate a new Program object
         Program p1 = new Program();
         p1.addStatement("PEN", 1);
-        
+        p1.addStatement("REP", 10);
+        p1.addStatement("FWD", 100);
+        p1.addStatement("ROT", 10);
+        p1.addStatement("END" );
         p1.addStatement("PEN", 0);
 
 
