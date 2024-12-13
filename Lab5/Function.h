@@ -1,25 +1,19 @@
-#ifndef FUNCTION
-#define FUNCTION
+#ifndef FUNCTION_H
+#define FUNCTION_H
 
 #include "Instruction.h"
 #include "Program.h"
 
 class Function : public Instruction {
 private:
-    Program *program;
+    Program* associatedProgram;
 
 public:
-    Function(const std::string &name, Program *p) 
-        : Instruction(name), program(p) {}
+    Function(const std::string& initWord, Program* program)
+        : Instruction(initWord), associatedProgram(program) {}
 
-    std::string toString() const override {
-        return name + ": Program size = " + std::to_string(program->getSize());
-    }
-
-    void execute() override {
-        for (int i = 0; i < program->getSize(); ++i) {
-            program->getStatement(i)->toString(); 
-        }
+    Program* getProgram() const {
+        return associatedProgram;
     }
 };
 

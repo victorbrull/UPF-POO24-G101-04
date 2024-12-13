@@ -1,5 +1,5 @@
-#ifndef TURTLEINSTRUCTION
-#define TURTLEINSTRUCTION
+#ifndef TURTLE_INSTRUCTION_H
+#define TURTLE_INSTRUCTION_H
 
 #include "Instruction.h"
 #include "Turtle.h"
@@ -7,23 +7,21 @@
 
 class TurtleInstruction : public Instruction {
 private:
-    Turtle *turtle;
+    Turtle* turtle;
 
 public:
-    TurtleInstruction(const std::string &name, Turtle *t) 
-    : Instruction(name), turtle(t) {}
+    TurtleInstruction(const std::string& initWord, int initMinRange, int initMaxRange, Turtle* initTurtle)
+        : Instruction(initWord, initMinRange, initMaxRange), turtle(initTurtle) {}
 
-    std::string toString() const override {
-        return name + ": " + turtle->toString();
-    }
-
-    void execute() {
-        // Logic based on "name"
-        if (name == "MoveForward") turtle->moveFwd(100);
-        else if (name == "Rotate") turtle->rotate(90);
-
-        // Prints the status of the Turtle after executing the instruction
-        std::cout << "Executed " << name << ": " << turtle->toString() << std::endl;
+    void apply(int parameter) {
+        std::cout << "Executing " << word << " with parameter " << parameter << " to the turtle." << std::endl;
+        if (word == "FWD") {
+            turtle->moveFwd(parameter);
+        } else if (word == "ROT") {
+            turtle->rotate(parameter);
+        } else if (word == "PEN") {
+            turtle->setPen(parameter);
+        }
     }
 };
 
